@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fatfs.h"
-#include "string.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SubSys_SDcardOps.h"
@@ -70,10 +70,10 @@ static void MX_SDIO_SD_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	FRESULT res; /* FatFs function common result code, ??neyi döndürüyor ? */
-	uint32_t byteswritten, bytesread; /* File write/read counts, nreye nasıl yazılıo edilio ? */
-	uint8_t wtext[] = "TAISAT SDIO Subsystem unit is working good"; /* File write buffer as 1byte */
-	uint8_t rtext[_MAX_SS];/* File read buffer, it's read as 512Byte at once because of _MAX_SS(max Sector Size)*/
+	FRESULT res; 										/* FatFs function common result code */
+	uint32_t byteswritten; 								/* File write/read counter*/
+	uint8_t wtext[] = "TAISAT SDIO Subsystem unit "; 	/* File write buffer as 1byte */
+	uint8_t rtext[_MAX_SS];								/* File read buffer, it's read as 512Byte at once because of _MAX_SS(max Sector Size)*/
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -98,45 +98,8 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
-  if(f_mount(&SDFatFS, (TCHAR const*)SDPath, 0) != FR_OK)
-      {
-          Error_Handler();
-      }
-      else
-      {
-          if(f_mkfs((TCHAR const*)SDPath, FM_ANY, 0, rtext, sizeof(rtext)) != FR_OK)
-          {
-              Error_Handler();
-          }
-          else
-          {
-              //Open file for writing (Create)
-              if(f_open(&SDFile, "STM32.TXT", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
-              {
-                  Error_Handler();
-              }
-              else
-              {
 
 
-
-                  //Write to the text file
-                  res = f_write(&SDFile, wtext, strlen((char *)wtext), (void *)&byteswritten);
-                  if((byteswritten == 0) || (res != FR_OK))
-                  {
-                      Error_Handler();
-                  }
-                  else
-                  {
-
-
-
-                      f_close(&SDFile);
-                  }
-              }
-          }
-      }
-      f_mount(&SDFatFS, (TCHAR const*)NULL, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
