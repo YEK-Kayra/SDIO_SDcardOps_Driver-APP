@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "SubSys_SDcardOps.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +44,6 @@
 SD_HandleTypeDef hsd;
 DMA_HandleTypeDef hdma_sdio_rx;
 DMA_HandleTypeDef hdma_sdio_tx;
-
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -96,6 +95,7 @@ int main(void)
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
 
+
   FRESULT res;	  /* FATFS system results variable*/
   FATFS SDFatFs;  /* File system object for SD disk logical drive */
   FIL MyFile;     /* File object */
@@ -103,17 +103,17 @@ int main(void)
     res =  f_mount(&SDFatFs, (TCHAR const*)SDPath, 0); /* Check the sd card is mounted */
     if (res != FR_OK)
   	  while(1);
-    //PASTED
-    res = f_mkdir("0:/dir");  /* Create a drictory on the sd card*/
-    if ((res != FR_OK)&&(res != FR_EXIST)) /*I change res != FR_EXIST */
+
+    res = f_mkdir("0:/dir");   //Create a drictory on the sd card
+    if ((res != FR_OK)&&(res != FR_EXIST))
   	  while(1);
-    // NOT PASTED
+
     res=  f_open(&MyFile, "0:/STM32.TXT", FA_CREATE_ALWAYS | FA_WRITE); /* http://elm-chan.org/fsw/ff/doc/open.html */
     if (res != FR_OK)
     	  while(1);
-    // NOT PASTED
+
     UINT written;
-    res =  f_write(&MyFile,"hello card",10,&written);
+    res =  f_write(&MyFile,"helTAISAT",12,&written);
     if (res != FR_OK)
   	  while(1);
 

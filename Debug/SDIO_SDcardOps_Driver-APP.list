@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  00020204  2**0
                   CONTENTS, READONLY
- 13 .debug_info   0000cd6d  00000000  00000000  00020247  2**0
+ 13 .debug_info   0000cd86  00000000  00000000  00020247  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 0000268d  00000000  00000000  0002cfb4  2**0
+ 14 .debug_abbrev 00002688  00000000  00000000  0002cfcd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00000c28  00000000  00000000  0002f648  2**3
+ 15 .debug_aranges 00000c28  00000000  00000000  0002f658  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 00000911  00000000  00000000  00030270  2**0
+ 16 .debug_rnglists 00000911  00000000  00000000  00030280  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00003d54  00000000  00000000  00030b81  2**0
+ 17 .debug_macro  00003cd4  00000000  00000000  00030b91  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00010497  00000000  00000000  000348d5  2**0
+ 18 .debug_line   000104ad  00000000  00000000  00034865  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0008b3f6  00000000  00000000  00044d6c  2**0
+ 19 .debug_str    0008b40f  00000000  00000000  00044d12  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00004594  00000000  00000000  000d0164  2**2
+ 20 .debug_frame  00004594  00000000  00000000  000d0124  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000075  00000000  00000000  000d46f8  2**0
+ 21 .debug_line_str 00000075  00000000  00000000  000d46b8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1386,15 +1386,15 @@ int main(void)
  800104e:	d000      	beq.n	8001052 <main+0x52>
   	  while(1);
  8001050:	e7fe      	b.n	8001050 <main+0x50>
-    //PASTED
-    res = f_mkdir("0:/dir");  /* Create a drictory on the sd card*/
+
+    res = f_mkdir("0:/dir");   //Create a drictory on the sd card
  8001052:	4836      	ldr	r0, [pc, #216]	; (800112c <main+0x12c>)
  8001054:	f006 fc93 	bl	800797e <f_mkdir>
  8001058:	4603      	mov	r3, r0
  800105a:	f507 5202 	add.w	r2, r7, #8320	; 0x2080
  800105e:	f102 0207 	add.w	r2, r2, #7
  8001062:	7013      	strb	r3, [r2, #0]
-    if ((res != FR_OK)&&(res != FR_EXIST)) /*I change res != FR_EXIST */
+    if ((res != FR_OK)&&(res != FR_EXIST))
  8001064:	f507 5302 	add.w	r3, r7, #8320	; 0x2080
  8001068:	f103 0307 	add.w	r3, r3, #7
  800106c:	781b      	ldrb	r3, [r3, #0]
@@ -1407,7 +1407,7 @@ int main(void)
  800107e:	d000      	beq.n	8001082 <main+0x82>
   	  while(1);
  8001080:	e7fe      	b.n	8001080 <main+0x80>
-    // NOT PASTED
+
     res=  f_open(&MyFile, "0:/STM32.TXT", FA_CREATE_ALWAYS | FA_WRITE); /* http://elm-chan.org/fsw/ff/doc/open.html */
  8001082:	f107 0348 	add.w	r3, r7, #72	; 0x48
  8001086:	3b28      	subs	r3, #40	; 0x28
@@ -1427,14 +1427,14 @@ int main(void)
  80010aa:	d000      	beq.n	80010ae <main+0xae>
     	  while(1);
  80010ac:	e7fe      	b.n	80010ac <main+0xac>
-    // NOT PASTED
+
     UINT written;
-    res =  f_write(&MyFile,"hello card",10,&written);
+    res =  f_write(&MyFile,"helTAISAT",12,&written);
  80010ae:	f107 0348 	add.w	r3, r7, #72	; 0x48
  80010b2:	3b2c      	subs	r3, #44	; 0x2c
  80010b4:	f107 0048 	add.w	r0, r7, #72	; 0x48
  80010b8:	3828      	subs	r0, #40	; 0x28
- 80010ba:	220a      	movs	r2, #10
+ 80010ba:	220c      	movs	r2, #12
  80010bc:	491d      	ldr	r1, [pc, #116]	; (8001134 <main+0x134>)
  80010be:	f006 f9e9 	bl	8007494 <f_write>
  80010c2:	4603      	mov	r3, r0
