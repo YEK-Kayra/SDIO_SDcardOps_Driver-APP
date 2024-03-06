@@ -104,12 +104,17 @@ int main(void)
   /**
    * you can not write "E:" , "e:",  "e\"
    */
-  SD_Mount ("E/", 1);
+  SD_Mount ("E/",0);
 
 /**
- * create new file sub1, KLM, DIR
+ * it creates new file as names sub1, KLM, DIR
+ * if you used small letter the function will reverse the name to big letters
+ * "CAR_Raw ==> CAR_RAW(in the sd card module)
  */
-  SD_Create_Dir("sub1");
+  SD_Create_Dir("CAR_Raw");
+
+
+
 
 
 

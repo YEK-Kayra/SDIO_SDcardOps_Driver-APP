@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  00020204  2**0
                   CONTENTS, READONLY
- 13 .debug_info   000102e1  00000000  00000000  00020247  2**0
+ 13 .debug_info   0001038f  00000000  00000000  00020247  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00002b1d  00000000  00000000  00030528  2**0
+ 14 .debug_abbrev 00002b21  00000000  00000000  000305d6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00000e68  00000000  00000000  00033048  2**3
+ 15 .debug_aranges 00000e70  00000000  00000000  000330f8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 00000af3  00000000  00000000  00033eb0  2**0
+ 16 .debug_rnglists 00000af9  00000000  00000000  00033f68  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  000040ac  00000000  00000000  000349a3  2**0
+ 17 .debug_macro  000040ac  00000000  00000000  00034a61  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00013aeb  00000000  00000000  00038a4f  2**0
+ 18 .debug_line   00013b05  00000000  00000000  00038b0d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0008d9c2  00000000  00000000  0004c53a  2**0
+ 19 .debug_str    0008d9f8  00000000  00000000  0004c612  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00004f74  00000000  00000000  000d9efc  2**2
+ 20 .debug_frame  00004f98  00000000  00000000  000da00c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000075  00000000  00000000  000dee70  2**0
+ 21 .debug_line_str 00000075  00000000  00000000  000defa4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1336,51 +1336,52 @@ FRESULT SD_Mount (const TCHAR* SD_path, BYTE Mount_Op)
  8001006:	6078      	str	r0, [r7, #4]
  8001008:	460b      	mov	r3, r1
  800100a:	70fb      	strb	r3, [r7, #3]
-	SD_result = f_mount(&FATFS_Ob, SD_path, 0);
- 800100c:	2200      	movs	r2, #0
- 800100e:	6879      	ldr	r1, [r7, #4]
- 8001010:	4808      	ldr	r0, [pc, #32]	; (8001034 <SD_Mount+0x34>)
- 8001012:	f006 f939 	bl	8007288 <f_mount>
- 8001016:	4603      	mov	r3, r0
- 8001018:	461a      	mov	r2, r3
- 800101a:	4b07      	ldr	r3, [pc, #28]	; (8001038 <SD_Mount+0x38>)
- 800101c:	701a      	strb	r2, [r3, #0]
+	SD_result = f_mount(&FATFS_Ob, SD_path, Mount_Op);
+ 800100c:	78fb      	ldrb	r3, [r7, #3]
+ 800100e:	461a      	mov	r2, r3
+ 8001010:	6879      	ldr	r1, [r7, #4]
+ 8001012:	4808      	ldr	r0, [pc, #32]	; (8001034 <SD_Mount+0x34>)
+ 8001014:	f006 f938 	bl	8007288 <f_mount>
+ 8001018:	4603      	mov	r3, r0
+ 800101a:	461a      	mov	r2, r3
+ 800101c:	4b06      	ldr	r3, [pc, #24]	; (8001038 <SD_Mount+0x38>)
+ 800101e:	701a      	strb	r2, [r3, #0]
 
 	if(SD_result != FR_OK){
- 800101e:	4b06      	ldr	r3, [pc, #24]	; (8001038 <SD_Mount+0x38>)
- 8001020:	781b      	ldrb	r3, [r3, #0]
- 8001022:	2b00      	cmp	r3, #0
- 8001024:	d000      	beq.n	8001028 <SD_Mount+0x28>
+ 8001020:	4b05      	ldr	r3, [pc, #20]	; (8001038 <SD_Mount+0x38>)
+ 8001022:	781b      	ldrb	r3, [r3, #0]
+ 8001024:	2b00      	cmp	r3, #0
+ 8001026:	d000      	beq.n	800102a <SD_Mount+0x2a>
 		/**
 		 * Buzzer will be activated like biiip biip bip
 		 */
 		while(1);
- 8001026:	e7fe      	b.n	8001026 <SD_Mount+0x26>
+ 8001028:	e7fe      	b.n	8001028 <SD_Mount+0x28>
 	}
 	else{
 
 		return FR_OK;
- 8001028:	2300      	movs	r3, #0
+ 800102a:	2300      	movs	r3, #0
 
 	}
 }
- 800102a:	4618      	mov	r0, r3
- 800102c:	3708      	adds	r7, #8
- 800102e:	46bd      	mov	sp, r7
- 8001030:	bd80      	pop	{r7, pc}
- 8001032:	bf00      	nop
+ 800102c:	4618      	mov	r0, r3
+ 800102e:	3708      	adds	r7, #8
+ 8001030:	46bd      	mov	sp, r7
+ 8001032:	bd80      	pop	{r7, pc}
  8001034:	200001f0 	.word	0x200001f0
  8001038:	20001224 	.word	0x20001224
 
 0800103c <SD_Create_Dir>:
 
 
-FRESULT SD_Create_Dir(const TCHAR* SD_path){
+FRESULT SD_Create_Dir(const TCHAR* SD_Dir){
  800103c:	b580      	push	{r7, lr}
  800103e:	b082      	sub	sp, #8
  8001040:	af00      	add	r7, sp, #0
  8001042:	6078      	str	r0, [r7, #4]
-	SD_result = f_mkdir(SD_path);
+
+	SD_result = f_mkdir(SD_Dir);
  8001044:	6878      	ldr	r0, [r7, #4]
  8001046:	f006 f965 	bl	8007314 <f_mkdir>
  800104a:	4603      	mov	r3, r0
@@ -1388,7 +1389,7 @@ FRESULT SD_Create_Dir(const TCHAR* SD_path){
  800104e:	4b08      	ldr	r3, [pc, #32]	; (8001070 <SD_Create_Dir+0x34>)
  8001050:	701a      	strb	r2, [r3, #0]
 
-	if ((SD_result != FR_OK)&&(SD_result != FR_EXIST))
+	if((SD_result != FR_OK)&&(SD_result != FR_EXIST)){
  8001052:	4b07      	ldr	r3, [pc, #28]	; (8001070 <SD_Create_Dir+0x34>)
  8001054:	781b      	ldrb	r3, [r3, #0]
  8001056:	2b00      	cmp	r3, #0
@@ -1397,12 +1398,18 @@ FRESULT SD_Create_Dir(const TCHAR* SD_path){
  800105c:	781b      	ldrb	r3, [r3, #0]
  800105e:	2b08      	cmp	r3, #8
  8001060:	d000      	beq.n	8001064 <SD_Create_Dir+0x28>
-	  	  while(1);
+		/**
+		 * Buzzer will be activated like biiip biip bip
+		 */
+		while(1);
  8001062:	e7fe      	b.n	8001062 <SD_Create_Dir+0x26>
-
+	}
+	else{
+		return FR_OK;
+ 8001064:	2300      	movs	r3, #0
+	}
 
 }
- 8001064:	bf00      	nop
  8001066:	4618      	mov	r0, r3
  8001068:	3708      	adds	r7, #8
  800106a:	46bd      	mov	sp, r7
@@ -1449,16 +1456,20 @@ int main(void)
   MX_USART1_UART_Init();
  8001090:	f000 f896 	bl	80011c0 <MX_USART1_UART_Init>
   /* USER CODE BEGIN 2 */
+
   /**
-   * you can not write "E:" , "e:" ;
+   * you can not write "E:" , "e:",  "e\"
    */
-  SD_Mount ("E/", 1);
- 8001094:	2101      	movs	r1, #1
+  SD_Mount ("E/",0);
+ 8001094:	2100      	movs	r1, #0
  8001096:	4803      	ldr	r0, [pc, #12]	; (80010a4 <main+0x30>)
  8001098:	f7ff ffb2 	bl	8001000 <SD_Mount>
-
-
-  SD_Create_Dir("sub1");
+/**
+ * it creates new file as names sub1, KLM, DIR
+ * if you used small letter the function will reverse the name to big letters
+ * "CAR_Raw ==> CAR_RAW(in the sd card module)
+ */
+  SD_Create_Dir("CAR_Raw");
  800109c:	4802      	ldr	r0, [pc, #8]	; (80010a8 <main+0x34>)
  800109e:	f7ff ffcd 	bl	800103c <SD_Create_Dir>
 

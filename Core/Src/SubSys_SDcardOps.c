@@ -4,6 +4,10 @@ FATFS FATFS_Ob; 	 /* File system object */
 FIL Fil_Ob;   		 /* File object */
 FRESULT SD_result;   /* File function return code */
 
+SDcard_HandleTypeDef SDparam; /* */
+
+
+
 /**
  * @brief
  * FatFs kullanarak bir mikro SD kartı temsil etmek için bir mantıksal sürücü oluşturabilir ve bu sürücü üzerinde dosya sistemine erişebilirsiniz.
@@ -22,7 +26,7 @@ The file/directory API functions get ready to work after this procedure.
  */
 FRESULT SD_Mount (const TCHAR* SD_path, BYTE Mount_Op)
 {
-	SD_result = f_mount(&FATFS_Ob, SD_path, 0);
+	SD_result = f_mount(&FATFS_Ob, SD_path, Mount_Op);
 
 	if(SD_result != FR_OK){
 		/**
@@ -38,12 +42,25 @@ FRESULT SD_Mount (const TCHAR* SD_path, BYTE Mount_Op)
 }
 
 
-FRESULT SD_Create_Dir(const TCHAR* SD_path){
-	SD_result = f_mkdir(SD_path);
+FRESULT SD_Create_Dir(const TCHAR* SD_Dir){
 
-	if ((SD_result != FR_OK)&&(SD_result != FR_EXIST))
-	  	  while(1);
+	SD_result = f_mkdir(SD_Dir);
+
+	if((SD_result != FR_OK)&&(SD_result != FR_EXIST)){
+		/**
+		 * Buzzer will be activated like biiip biip bip
+		 */
+		while(1);
+	}
+	else{
+		return FR_OK;
+	}
+
+}
+
+FRESULT SD_Write(const TCHAR* FileName){
 
 
+	f_open(&Fil_Ob, FileName, FA_CREATE_ALWAYS | FA_WRITE);
 }
 
