@@ -8,15 +8,13 @@
 #ifndef INC_SUBSYS_SDCARDOPS_H_
 #define INC_SUBSYS_SDCARDOPS_H_
 
+
 #include "main.h"
 #include "fatfs.h"
-#include "ff.h"
+#include "stm32f4xx_hal.h"
 
-extern SD_HandleTypeDef hsd;
-extern DMA_HandleTypeDef hdma_sdio_rx;
-extern DMA_HandleTypeDef hdma_sdio_tx;
-
-
+FRESULT SD_Mount(const TCHAR* SD_path,BYTE Mount_Op);
+FRESULT SD_Create_Dir(const TCHAR* Dir_Name);
 
 
 #endif /* INC_SUBSYS_SDCARDOPS_H_ */
