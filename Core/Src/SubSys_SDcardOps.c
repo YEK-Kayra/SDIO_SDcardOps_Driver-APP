@@ -4,8 +4,7 @@ FATFS FATFS_Ob; 	 /* File system object */
 FIL Fil_Ob;   		 /* File object */
 FRESULT SD_result;   /* File function return code */
 
-SDcard_HandleTypeDef SDparam; /* */
-
+// INIT FONKSİYONUNU DAHİL EDİNCE STRUCT TANIMLAMALARINI DAHHA İYİ YAPICAZ 1-2 GÜNE
 
 
 /**
@@ -26,6 +25,7 @@ The file/directory API functions get ready to work after this procedure.
  */
 FRESULT SD_Mount (const TCHAR* SD_path, BYTE Mount_Op)
 {
+
 	SD_result = f_mount(&FATFS_Ob, SD_path, Mount_Op);
 
 	if(SD_result != FR_OK){
@@ -58,9 +58,33 @@ FRESULT SD_Create_Dir(const TCHAR* SD_Dir){
 
 }
 
-FRESULT SD_Write(const TCHAR* FileName){
 
+FRESULT SD_Write(const TCHAR* SD_FileName, char* SD_Buffer){
 
-	f_open(&Fil_Ob, FileName, FA_CREATE_ALWAYS | FA_WRITE);
+	SD_result = f_open(&Fil_Ob, SD_FileName, FA_CREATE_ALWAYS | FA_WRITE);
+
+	if(SD_result != FR_OK){
+		/**
+		 * Send to ground station error message
+	     */
+		while(1);
+	}
+
+	UINT written;
+	SD_result =  f_write(&Fil_Ob,SD_Buffer,strlen(SD_Buffer),&written);
+
+	SD_result = f_close(&Fil_Ob);
+	    if (SD_result != FR_OK){
+	    	/**
+	    	 * Send to ground station error message
+	    	 */
+	    	while(1);
+	    }
+	    /* buraya bakacağım , deneme12 yi dahil et. yazdırma olayını düşün
+	    FILINFO info;
+	      res = f_stat("0:/STM32.TXT",&info);
+	        if (res != FR_OK)
+	      	  while(1);*/
+return FR_OK;
 }
 

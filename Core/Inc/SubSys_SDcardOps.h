@@ -13,16 +13,15 @@
 #include "fatfs.h"
 #include "stm32f4xx_hal.h"
 
-typedef struct{
+/*To convert number value to string format*/
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
-	const TCHAR* SD_path;
-	const TCHAR* SD_Dir;
-	const TCHAR* FileName;
-
-}SDcard_HandleTypeDef;
 
 FRESULT SD_Mount(const TCHAR* SD_path,BYTE Mount_Op);
 FRESULT SD_Create_Dir(const TCHAR* SD_Dir);
-
+FRESULT SD_Write(const TCHAR* SD_FileName,char* SD_Buffer);
 
 #endif /* INC_SUBSYS_SDCARDOPS_H_ */

@@ -101,20 +101,25 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  char myBuffer[] = "TURKISH ARTIFICIAL INTELLIGENCE SUPPORTED AUTONOMOUS TECHNOLOGY";
+
   /**
-   * you can not write "E:" , "e:",  "e\"
+     * you can not write "E:" , "e:",  "e\"
+     */
+    SD_Mount ("E/",0);
+
+  /**
+   * it creates new file as names sub1, KLM, DIR
+   * if you used small letter the function will reverse the name to big letters
+   * "CAR_Raw ==> CAR_RAW(in the sd card module)
    */
-  SD_Mount ("E/",0);
-
-/**
- * it creates new file as names sub1, KLM, DIR
- * if you used small letter the function will reverse the name to big letters
- * "CAR_Raw ==> CAR_RAW(in the sd card module)
- */
-  SD_Create_Dir("CAR_Raw");
+    SD_Create_Dir("CAR_RAW");
 
 
-
+    /**
+     *You can not write like this "CAR_Raw:/STM32.TXT" . Dont  use ":" in the string
+     */
+   SD_Write("CAR_RAW/STM32.TXT",myBuffer);
 
 
 

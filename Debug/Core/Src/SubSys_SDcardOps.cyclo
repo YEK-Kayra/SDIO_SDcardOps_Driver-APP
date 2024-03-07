@@ -1,3 +1,0 @@
-../Core/Src/SubSys_SDcardOps.c:27:9:SD_Mount	2
-../Core/Src/SubSys_SDcardOps.c:45:9:SD_Create_Dir	3
-../Core/Src/SubSys_SDcardOps.c:61:9:SD_Write	1
