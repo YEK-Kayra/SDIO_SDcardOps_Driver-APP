@@ -4,6 +4,7 @@ FATFS FATFS_Ob; 	 /* File system object */
 FIL Fil_Ob;   		 /* File object */
 FRESULT SD_result;   /* File function return code */
 
+
 // INIT FONKSİYONUNU DAHİL EDİNCE STRUCT TANIMLAMALARINI DAHHA İYİ YAPICAZ 1-2 GÜNE
 
 
@@ -80,11 +81,26 @@ FRESULT SD_Write(const TCHAR* SD_FileName, char* SD_Buffer){
 	    	 */
 	    	while(1);
 	    }
-	    /* buraya bakacağım , deneme12 yi dahil et. yazdırma olayını düşün
-	    FILINFO info;
-	      res = f_stat("0:/STM32.TXT",&info);
-	        if (res != FR_OK)
-	      	  while(1);*/
+/* Tekli dönüştürme ve yazdırma olayına odaklanacak*/
 return FR_OK;
+}
+
+
+char* Value2String(float Val){
+	//The maximum value for float value is 4,294,967,295. We have maximum 1+3+3+3 = 10Byte hold
+	char Frame[10];
+
+	//Put Val variable into the Frame variable as a string
+	sprintf(Frame, "%.2f", Val);
+
+	//Malloc function returns the starting address of the allocated memory.
+	char* Str = (char*)malloc(strlen(Frame)+1);
+
+	//Coppy the Frame value to the Str variable  that was setted enough space
+	strcpy(Str, Frame);
+
+	//Return the string
+	return Str;
+
 }
 

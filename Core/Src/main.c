@@ -101,28 +101,37 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  char myBuffer[] = "TURKISH ARTIFICIAL INTELLIGENCE SUPPORTED AUTONOMOUS TECHNOLOGY";
+	 //We create an object that keeps different satellite variable
+	  SD_Datas_HandleTypeDef SD_Data;
 
-  /**
-     * you can not write "E:" , "e:",  "e\"
-     */
-    SD_Mount ("E/",0);
+	  //We have a big number value
+	  SD_Data.Pressure = 101325;
 
-  /**
-   * it creates new file as names sub1, KLM, DIR
-   * if you used small letter the function will reverse the name to big letters
-   * "CAR_Raw ==> CAR_RAW(in the sd card module)
-   */
-    SD_Create_Dir("CAR_RAW");
+
+	  //
+	  char* StringEquvlnt = Value2String(SD_Data.Pressure);
+
+  	  /**
+       * you can not write "E:" , "e:",  "e\"
+       */
+      SD_Mount ("E/",0);
 
 
     /**
-     *You can not write like this "CAR_Raw:/STM32.TXT" . Dont  use ":" in the string
+     * it creates new file as names sub1, KLM, DIR
+     * if you used small letter the function will reverse the name to big letters
+     * "CAR_Raw ==> CAR_RAW(in the sd card module)
      */
-   SD_Write("CAR_RAW/STM32.TXT",myBuffer);
+      SD_Create_Dir("SAT_CAR");
 
 
+	  /**
+	   *You can not write like this "CAR_Raw:/STM32.TXT" . Dont  use ":" in the string
+	   */
+	  SD_Write("SAT_CAR/STM32.TXT",StringEquvlnt);
 
+
+	  free(StringEquvlnt);
 
   /* USER CODE END 2 */
 

@@ -23,5 +23,22 @@
 FRESULT SD_Mount(const TCHAR* SD_path,BYTE Mount_Op);
 FRESULT SD_Create_Dir(const TCHAR* SD_Dir);
 FRESULT SD_Write(const TCHAR* SD_FileName,char* SD_Buffer);
+char* Value2String(float Val);
+
+typedef struct{
+
+float Pressure;
+float VertSpeed;
+float VertHeight;
+float Temperature;
+float Voltage;
+float GPS_Altitude;
+float GPS_Longitude;
+float GPS_Latitude;
+
+int PacketNO;
+int StatusSeparation;
+
+}SD_Datas_HandleTypeDef;
 
 #endif /* INC_SUBSYS_SDCARDOPS_H_ */
