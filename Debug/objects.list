@@ -1,4 +1,3 @@
-"./Core/Src/File_Handling.o"
 "./Core/Src/SubSys_SDcardOps.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f4xx_hal_msp.o"

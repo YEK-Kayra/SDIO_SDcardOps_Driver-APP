@@ -1,10 +1,11 @@
 #include <SubSys_SDcardOps.h>
 #include "stm32f4xx_hal.h"
 FATFS FATFS_Ob; 	 /* File system object */
-FIL Fil_Ob;   		 /* File object */
+FIL FilePage;   	 /* SD card page that is stored in the directory */
 FRESULT SD_result;   /* File function return code */
+char* DataTopFrame = "PacketNO, GPS_Latitude, GPS_Longitude, GPS_Altitude, Pressure, VertSpeed, VertHeight, Temperature, Voltage, StatusSeparation, SuccesSepInf";
 
-
+extern char SdDatasBuf[LineSize];
 // INIT FONKSİYONUNU DAHİL EDİNCE STRUCT TANIMLAMALARINI DAHHA İYİ YAPICAZ 1-2 GÜNE
 
 
@@ -43,7 +44,7 @@ FRESULT SD_Mount (const TCHAR* SD_path, BYTE Mount_Op)
 }
 
 
-FRESULT SD_Create_Dir(const TCHAR* SD_Dir){
+FRESULT SD_Create_Dir_File(const TCHAR* SD_Dir,const TCHAR* SD_FileName){
 
 	SD_result = f_mkdir(SD_Dir);
 
@@ -54,49 +55,62 @@ FRESULT SD_Create_Dir(const TCHAR* SD_Dir){
 		while(1);
 	}
 	else{
+
+		SD_result = f_open(&FilePage, SD_FileName, FA_CREATE_ALWAYS | FA_WRITE);
+		SD_result = f_close(&FilePage);
+
+		//sprintf(SdDatas,"%s\n",DataTopFrame);
+		//SD_Write(SdDatas,"SAT_CAR/STM32.TXT");
+
+		if(SD_result != FR_OK){
+				/**
+				 * Send to ground station error message
+			     */
+				while(1);
+			}
+		SD_result = f_close(&FilePage);
 		return FR_OK;
 	}
 
 }
 
 
-FRESULT SD_Write(const TCHAR* SD_FileName, char* SD_Buffer){
+//f_lseek(&FilePage, f_size(&FilePage));
 
-	SD_result = f_open(&Fil_Ob, SD_FileName, FA_CREATE_ALWAYS | FA_WRITE);
-
-	if(SD_result != FR_OK){
-		/**
-		 * Send to ground station error message
-	     */
-		while(1);
-	}
+FRESULT SD_Write(char* SD_Buffer,const TCHAR* SD_FileName){
 
 	UINT written;
-	SD_result =  f_write(&Fil_Ob,SD_Buffer,strlen(SD_Buffer),&written);
 
-	SD_result = f_close(&Fil_Ob);
-	    if (SD_result != FR_OK){
-	    	/**
-	    	 * Send to ground station error message
-	    	 */
-	    	while(1);
-	    }
-/* Tekli dönüştürme ve yazdırma olayına odaklanacak*/
-return FR_OK;
+	SD_result = f_open(&FilePage, SD_FileName, FA_OPEN_APPEND | FA_WRITE);
+
+
+
+
+
+	SD_result =  f_write(&FilePage,SD_Buffer,strlen(SD_Buffer),&written);
+
+	SD_result = f_close(&FilePage);
+
+	return FR_OK;
 }
 
 
+/**
+ * This function returns start address of the data block. So it is had to be defined " char* "
+ */
 char* Value2String(float Val){
-	//The maximum value for float value is 4,294,967,295. We have maximum 1+3+3+3 = 10Byte hold
+
+//The maximum value for float value is 4,294,967,295. We have maximum 1+3+3+3 = 10Byte hold
 	char Frame[10];
 
 	//Put Val variable into the Frame variable as a string
+	//int sprintf(char *buffer, const char *format) ==> Frame and Val are addresses
 	sprintf(Frame, "%.2f", Val);
-
 	//Malloc function returns the starting address of the allocated memory.
 	char* Str = (char*)malloc(strlen(Frame)+1);
 
 	//Coppy the Frame value to the Str variable  that was setted enough space
+	//char* strcpy(char *dest, const char *src) ==>  Str and Frame are addresses.
 	strcpy(Str, Frame);
 
 	//Return the string
