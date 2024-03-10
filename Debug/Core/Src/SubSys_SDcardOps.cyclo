@@ -1,5 +1,4 @@
-../Core/Src/SubSys_SDcardOps.c:20:6:SD_FillVariables	1
-../Core/Src/SubSys_SDcardOps.c:62:9:SD_Mount	2
-../Core/Src/SubSys_SDcardOps.c:81:9:SD_Create_Dir_File	4
-../Core/Src/SubSys_SDcardOps.c:114:9:SD_Write	1
-../Core/Src/SubSys_SDcardOps.c:131:7:Value2String	1
+../Core/Src/SubSys_SDcardOps.c:28:6:SD_FillVariables	1
+../Core/Src/SubSys_SDcardOps.c:53:9:SD_Mount	2
+../Core/Src/SubSys_SDcardOps.c:72:9:SD_Create_Dir_File	4
+../Core/Src/SubSys_SDcardOps.c:103:9:SD_Write	1

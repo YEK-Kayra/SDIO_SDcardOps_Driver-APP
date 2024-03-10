@@ -115,11 +115,9 @@ int main(void)
 
       /********** SD_CARD_OPS INITIALIZE PART END **********/
 
+      //These functions will be written in the loop after all datas collected
       SD_FillVariables();
 	  SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
-	  //SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
-	  //SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
-	  //SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
 
   /* USER CODE END 2 */
 
