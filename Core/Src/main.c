@@ -102,8 +102,8 @@ int main(void)
 
 	  /********** SD_CARD_OPS INITIALIZE PART BEGIN **********/
 
-  	  //We create an object that keeps different satellite variable
-	  SD_Datas_HandleTypeDef SD_Data;
+	  //We create a buffer that contains satellite's carrier variables. We fill it by SD_Data objects variables
+	  extern char SdDatasBuf[LineSize];
 
       //you can not write "E:" , "e:",  "e\"
       SD_Mount ("E/",0);
@@ -111,40 +111,16 @@ int main(void)
      //it creates new file as names sub1, KLM, DIR
      //if you used small letter the function will reverse the name to big letters
      //"CAR_Raw ==> CAR_RAW(in the sd card module)
-      SD_Create_Dir_File("SAT_CAR","SAT_CAR/STM32.TXT");
+      SD_Create_Dir_File("SAT_CAR","SAT_CAR/STM32.TXT",SdDatasBuf);
 
       /********** SD_CARD_OPS INITIALIZE PART END **********/
 
-
-	  //We have numerical value
-      	SD_Data.Carr_Pressure = 101325.12;
-      	SD_Data.Carr_Temperature = 32.78;
-      	SD_Data.Carr_VertHeight = 1500.45;
-      	SD_Data.Carr_VertSpeed = 200.44;
-
-      	SD_Data.Carr_GPS_Latitude = 89.912109;
-      	SD_Data.Carr_GPS_Longitude = 89.0203478;
-      	SD_Data.Carr_GPS_Altitude = 3000.1585941;
-
-      	SD_Data.Carr_Voltage = 8.42;
-      	SD_Data.Carr_PacketNO = 1256;
-      	SD_Data.Carr_StatusSeparation = 1;
-      	SD_Data.Carr_SuccesSepInf = "Departure unsuccessful";
-
-	  /*...will be added more*/
-
-	  char SdDatasBuf[LineSize];
-
-	  sprintf(SdDatasBuf,"<%d, %.4f, %.4f, %.4f, %.2f, %.2f, %.2f, %.2f, %.2f, %d, %s >\n",
-			  	  	  	  	  	  	  	  	  	  	SD_Data.Carr_PacketNO,SD_Data.Carr_GPS_Latitude,SD_Data.Carr_GPS_Longitude,
-													SD_Data.Carr_GPS_Altitude,SD_Data.Carr_Pressure,SD_Data.Carr_Temperature,
-	  												SD_Data.Carr_VertHeight,SD_Data.Carr_VertSpeed,SD_Data.Carr_Voltage,
-	  												SD_Data.Carr_StatusSeparation,SD_Data.Carr_SuccesSepInf);
-
+      SD_FillVariables();
 	  SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
+	  //SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
+	  //SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
+	  //SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
 
-
-	  SD_Write(SdDatasBuf,"SAT_CAR/STM32.TXT");
   /* USER CODE END 2 */
 
   /* Infinite loop */

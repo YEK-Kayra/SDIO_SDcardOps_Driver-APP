@@ -24,10 +24,11 @@
 
 
 FRESULT SD_Mount(const TCHAR* SD_path,BYTE Mount_Op);
-FRESULT SD_Create_Dir_File(const TCHAR* SD_Dir,const TCHAR* SD_FileName);
+FRESULT SD_Create_Dir_File(const TCHAR* SD_Dir,const TCHAR* SD_FileName,char* SD_Buffer);
 
 FRESULT SD_Write(char* SD_Buffer,const TCHAR* SD_FileName);
 char* Value2String(float Val);
+void SD_FillVariables(void);
 
 typedef struct{
 
